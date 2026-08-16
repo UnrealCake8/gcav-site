@@ -1,0 +1,3 @@
+import type { Metadata } from "next"; import { PageHero } from "@/components/PageHero"; import { activeSocialLinks } from "@/content/social";
+export const metadata:Metadata={title:"Community",description:"Official studio community destinations."};
+export default function Community(){return <><PageHero kicker="CONNECT" title="Community" description="Official studio destinations will always be collected here."/><section className="section">{activeSocialLinks.length?<div className="social-grid">{activeSocialLinks.map(x=><a href={x.url} key={x.label}><span>{x.label}</span><b>↗</b></a>)}</div>:<div className="empty"><span>OFFICIAL LINKS ONLY</span><h2>Community links are coming soon.</h2><p>No social or community URLs have been configured.</p></div>}</section></>}
