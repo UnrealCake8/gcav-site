@@ -23,41 +23,39 @@ export type NewsPost = {
   body: NewsBlock[];
 };
 
-/*
-  HOW TO ADD AN ARTICLE
-
-  1. Copy the example object below into the `news` array.
-  2. Give it a unique `slug`, for example: "grand-chamak-auto-v-update".
-  3. Put images in /public/news and reference them like: "/news/my-image.jpg".
-  4. Build the article using paragraph, heading and image blocks.
-
-  Example:
-
+export const news: NewsPost[] = [
   {
-    slug: "example-update",
-    title: "Example update",
+    slug: "welcome",
+    title: "Welcome to our News Page!",
     date: "2026-08-17",
-    author: "Unrealdrop Games",
+    author: "WebDev1",
     category: "Development Update",
-    excerpt: "A short description shown on the news page.",
-    heroImage: "/news/example-hero.jpg",
-    heroAlt: "Example screenshot",
+    excerpt: "In this article, we tell you all about updates related to our games!",
+    heroImage: "https://gcav-site.vercel.app/games/grand-chamak-auto-v/COVER.webp",
+    heroAlt: "Grand Chamak Auto's logo, one of the games being developed here at Malouk's Games!",
     featured: true,
     body: [
-      { type: "paragraph", text: "Your first paragraph goes here." },
-      { type: "heading", text: "A section heading" },
-      { type: "paragraph", text: "More article text goes here." },
+      {
+        type: "heading",
+        text: "Welcome!",
+      },
+      {
+        type: "paragraph",
+        text: "I'm unrealdrop, and this is the Malouk's Games News page! We will post updates regarding our games, developer positions, and so much more! This is so you can get the latest scoop, on what's going on :) If you want the latest scoop, join the Discord and follow us!",
+      },
+      {
+        type: "heading",
+        text: "Sneak peek on our game!",
+      },
       {
         type: "image",
-        src: "/news/example-screenshot.jpg",
-        alt: "Description of the screenshot",
-        caption: "Optional caption shown under the image."
-      }
-    ]
-  }
-*/
-
-export const news: NewsPost[] = [];
+        src: "https://gcav-site.vercel.app/games/grand-chamak-auto-v/AERO_HORIZON_2.webp",
+        alt: "AHFS27",
+        caption: "A preview of our Flight Simulator, Aero Horizon Flight Simulator 2027, aka AHFS27 for short!",
+      },
+    ],
+  },
+];
 
 export function getNewsPost(slug: string) {
   return news.find((post) => post.slug === slug);
