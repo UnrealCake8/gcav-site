@@ -5,11 +5,11 @@ import { useEffect, useState } from "react";
 import { Logo } from "./Logo";
 
 const nav = [
-  ["Home", "/"],
-  ["Games", "/games"],
-  ["News", "/news"],
-  ["Developer", "/developer"],
-  ["Community", "/community"],
+  ["Home", "/", "Back to the front page"],
+  ["Games", "/games", "Explore our worlds"],
+  ["News", "/news", "Updates from development"],
+  ["Developer", "/developer", "Behind the studio"],
+  ["Community", "/community", "Find us online"],
 ];
 
 export function Header() {
@@ -24,17 +24,14 @@ export function Header() {
   }, []);
 
   useEffect(() => {
-    if (!open) return;
-
     const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    if (open) document.body.style.overflow = "hidden";
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") setOpen(false);
     };
 
     addEventListener("keydown", onKeyDown);
-
     return () => {
       document.body.style.overflow = previousOverflow;
       removeEventListener("keydown", onKeyDown);
@@ -50,9 +47,7 @@ export function Header() {
 
         <nav className="nav desktop-nav" aria-label="Main navigation">
           {nav.map(([name, href]) => (
-            <Link key={href} href={href}>
-              {name}
-            </Link>
+            <Link key={href} href={href}>{name}</Link>
           ))}
         </nav>
 
@@ -69,34 +64,30 @@ export function Header() {
         </button>
       </div>
 
-      <div
-        className={`mobile-menu-layer ${open ? "open" : ""}`}
-        aria-hidden={!open}
-        onClick={() => setOpen(false)}
-      >
-        <aside
-          id="mobile-menu"
-          className="mobile-menu-panel"
-          aria-label="Mobile navigation"
-          onClick={(event) => event.stopPropagation()}
-        >
-          <div className="mobile-menu-kicker">Explore Unrealdrop</div>
+      <div id="mobile-menu" className={`mobile-menu-layer ${open ? "open" : ""}`} aria-hidden={!open}>
+        <div className="mobile-menu-noise" aria-hidden="true" />
+        <div className="mobile-menu-topline">
+          <span>UNREALDROP GAMES</span>
+          <span>MENU / 05</span>
+        </div>
 
-          <nav className="mobile-nav">
-            {nav.map(([name, href], index) => (
-              <Link key={href} href={href} onClick={() => setOpen(false)}>
-                <span>{String(index + 1).padStart(2, "0")}</span>
+        <nav className="mobile-nav" aria-label="Mobile navigation">
+          {nav.map(([name, href, description], index) => (
+            <Link key={href} href={href} onClick={() => setOpen(false)}>
+              <span className="mobile-nav-number">0{index + 1}</span>
+              <span className="mobile-nav-copy">
                 <strong>{name}</strong>
-                <b aria-hidden="true">↗</b>
-              </Link>
-            ))}
-          </nav>
+                <small>{description}</small>
+              </span>
+              <span className="mobile-nav-arrow" aria-hidden="true">↗</span>
+            </Link>
+          ))}
+        </nav>
 
-          <div className="mobile-menu-footer">
-            <span>Unrealdrop Games</span>
-            <span>Built for mobile exploration</span>
-          </div>
-        </aside>
+        <div className="mobile-menu-bottom">
+          <span>INDIE GAMES / ROBLOX</span>
+          <span>EST. 2026</span>
+        </div>
       </div>
     </header>
   );
