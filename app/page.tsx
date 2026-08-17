@@ -3,88 +3,48 @@ import { HeroCarousel } from "@/components/HeroCarousel";
 import { GameCard } from "@/components/GameCard";
 import { featuredGames, games } from "@/content/games";
 import { news } from "@/content/news";
-import { site } from "@/content/site";
 
 export default function Home() {
   return (
     <>
       <HeroCarousel items={featuredGames} />
 
-      <section className="studio-strip" aria-label="Studio overview">
-        <div>
-          <span>Independent</span>
-          <b>Game Studio</b>
-        </div>
-        <div>
-          <span>Current Projects</span>
-          <b>{games.length}</b>
-        </div>
-        <div>
-          <span>Built Around</span>
-          <b>Players & Worlds</b>
-        </div>
-      </section>
-
-      <section className="section games-section">
-        <div className="section-head">
+      <section className="section games-section cinematic-section">
+        <div className="section-head cinematic-head">
           <div>
-            <p className="eyebrow">THE LINEUP</p>
-            <h2>Our Games</h2>
+            <p className="eyebrow">MALOUKS GAMES</p>
+            <h2>Games</h2>
           </div>
           <Link className="text-link" href="/games">View all <span>↗</span></Link>
         </div>
-        <div className="games-grid">
+        <div className="games-grid cinematic-games">
           {games.map((game) => <GameCard key={game.slug} game={game} />)}
         </div>
       </section>
 
-      <section className="section statement-section">
-        <p className="eyebrow">WHAT WE MAKE</p>
-        <div className="statement-grid">
-          <h2>Places you can get lost in.</h2>
-          <div>
-            <p>We build game experiences around exploration, vehicles, memorable locations and the freedom to make your own fun.</p>
-            <Link className="text-link" href="/developer">About the studio <span>↗</span></Link>
-          </div>
-        </div>
-      </section>
-
-      <section className="section news-preview">
+      <section className="section news-preview cinematic-news">
         <div className="section-head">
           <div>
-            <p className="eyebrow">FROM THE STUDIO</p>
-            <h2>Latest Updates</h2>
+            <p className="eyebrow">STUDIO NEWS</p>
+            <h2>Latest</h2>
           </div>
-          <Link className="text-link" href="/newswire">Newswire <span>↗</span></Link>
+          <Link className="text-link" href="/newswire">View news <span>↗</span></Link>
         </div>
         {news.length === 0 ? (
-          <div className="empty compact-empty">
-            <span>NO TRANSMISSIONS YET</span>
-            <h3>Development updates are on the way.</h3>
-            <p>Official announcements and progress notes will appear here.</p>
-          </div>
+          <Link className="news-placeholder" href="/newswire">
+            <span className="eyebrow">COMING SOON</span>
+            <strong>Development updates will appear here.</strong>
+            <span className="news-arrow">↗</span>
+          </Link>
         ) : null}
       </section>
 
-      <section className="about section">
+      <section className="social-callout">
         <div>
-          <p className="eyebrow">ABOUT THE STUDIO</p>
-          <h2>A home for<br />new worlds.</h2>
+          <p className="eyebrow">MALOUKS GAMES</p>
+          <h2>Follow the studio.</h2>
         </div>
-        <div className="about-copy">
-          <p>{site.description}</p>
-          <Link className="text-link" href="/developer">Meet the studio <span>↗</span></Link>
-        </div>
-        <div className="signal" aria-hidden="true"><i /><i /><i /><i /><i /></div>
-      </section>
-
-      <section className="community-banner section">
-        <div>
-          <p className="eyebrow">FOLLOW THE STUDIO</p>
-          <h2>See what we&apos;re building.</h2>
-          <p>Find every official Malouks Games community and social channel in one place.</p>
-        </div>
-        <Link className="button primary" href="/community">Community & Socials</Link>
+        <Link className="button light-button" href="/community">Community</Link>
       </section>
     </>
   );
