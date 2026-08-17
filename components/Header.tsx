@@ -80,7 +80,7 @@ export function Header() {
           aria-label="Mobile navigation"
           onClick={(event) => event.stopPropagation()}
         >
-          <div className="mobile-menu-kicker">Explore Unrealdrop</div>
+          <div className="mobile-menu-kicker">Explore Malouk's Games</div>
 
           <nav className="mobile-nav">
             {nav.map(([name, href], index) => (
@@ -93,7 +93,7 @@ export function Header() {
           </nav>
 
           <div className="mobile-menu-footer">
-            <span>Unrealdrop Games</span>
+            <span>Malouk's Games</span>
             <span>Built for mobile exploration</span>
           </div>
         </aside>
