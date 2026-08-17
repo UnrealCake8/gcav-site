@@ -13,9 +13,9 @@ export function MobileHome() {
   return (
     <div className={styles.mobileExperience}>
       <header className={styles.topbar}>
-        <Link href="/" className={styles.brand} aria-label="Unrealdrop Games home">
-          <span className={styles.brandMark}>U</span>
-          <span>UNREALDROP</span>
+        <Link href="/" className={styles.brand} aria-label="Malouk's Games home">
+          <span className={styles.brandMark}>M</span>
+          <span>Malouk's</span>
         </Link>
         <Link href="/news" className={styles.topAction}>NEWS</Link>
       </header>
@@ -90,7 +90,7 @@ export function MobileHome() {
         <section className={styles.section}>
           <div className={styles.sectionTitle}>
             <div>
-              <span>02 / NEWSWIRE</span>
+              <span>02 / NEWS</span>
               <h2>What&apos;s happening.</h2>
             </div>
             <Link href="/news">ALL ↗</Link>
@@ -125,7 +125,7 @@ export function MobileHome() {
         </section>
 
         <div className={styles.mobileFooter}>
-          <strong>UNREALDROP GAMES</strong>
+          <strong>Malouk's GAMES</strong>
           <span>Independent games. Built differently.</span>
         </div>
       </main>
