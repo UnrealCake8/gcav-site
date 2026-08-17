@@ -3,6 +3,7 @@ import "./globals.css";
 import "./refresh.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { InteractiveFX } from "@/components/InteractiveFX";
 import { site } from "@/content/site";
 
 export const metadata: Metadata = {
@@ -19,6 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body style={{ "--accent": site.accentColor } as React.CSSProperties}>
         <a className="skip" href="#content">Skip to content</a>
+        <InteractiveFX />
         <Header />
         <main id="content">{children}</main>
         <Footer />
