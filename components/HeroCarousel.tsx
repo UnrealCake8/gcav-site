@@ -41,7 +41,18 @@ export function HeroCarousel({ items }: { items: Game[] }) {
 
       <div className="hero-content">
         <span className="hero-index">FEATURED / {String(i + 1).padStart(2, "0")}</span>
-        <p className="eyebrow">{game.title}</p>
+        {game.logoImage ? (
+          <Image
+            className="hero-game-logo"
+            src={game.logoImage}
+            alt={`${game.title} logo`}
+            width={720}
+            height={360}
+            sizes="(max-width: 760px) 80vw, 520px"
+          />
+        ) : (
+          <p className="eyebrow">{game.title}</p>
+        )}
         <h1>{game.tagline.replace(" in ", "\nin ")}</h1>
         {game.description && <p className="lede">{game.description}</p>}
         <div className="actions">
