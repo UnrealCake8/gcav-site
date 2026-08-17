@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "./refresh.css";
+import "./interactive.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { InteractiveFX } from "@/components/InteractiveFX";
