@@ -2,44 +2,70 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import type { Game } from "@/content/games";
 
 export function HeroCarousel({ items }: { items: Game[] }) {
   const [i, setI] = useState(0);
-  let start = 0;
+  const start = useRef(0);
+  const heroRef = useRef<HTMLElement>(null);
   const game = items[i];
-  const move = (direction: number) => setI((i + direction + items.length) % items.length);
+  const move = (direction: number) => setI((current) => (current + direction + items.length) % items.length);
+
+  const setDepth = (x: number, y: number) => {
+    const el = heroRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const px = Math.max(-1, Math.min(1, ((x - rect.left) / rect.width - 0.5) * 2));
+    const py = Math.max(-1, Math.min(1, ((y - rect.top) / rect.height - 0.5) * 2));
+    el.style.setProperty("--hero-x", px.toFixed(3));
+    el.style.setProperty("--hero-y", py.toFixed(3));
+  };
+
+  const resetDepth = () => {
+    const el = heroRef.current;
+    if (!el) return;
+    el.style.setProperty("--hero-x", "0");
+    el.style.setProperty("--hero-y", "0");
+  };
 
   return (
     <section
-      className="hero"
+      ref={heroRef}
+      className="hero hero-depth"
       aria-roledescription="carousel"
       aria-label="Featured games"
       tabIndex={0}
+      onPointerMove={(event) => {
+        if (event.pointerType === "mouse") setDepth(event.clientX, event.clientY);
+      }}
+      onPointerLeave={resetDepth}
       onKeyDown={(event) => {
         if (event.key === "ArrowLeft") move(-1);
         if (event.key === "ArrowRight") move(1);
       }}
-      onTouchStart={(event) => (start = event.touches[0].clientX)}
+      onTouchStart={(event) => (start.current = event.touches[0].clientX)}
       onTouchEnd={(event) => {
-        const distance = event.changedTouches[0].clientX - start;
+        const distance = event.changedTouches[0].clientX - start.current;
         if (Math.abs(distance) > 45) move(distance < 0 ? 1 : -1);
       }}
     >
-      <Image
-        key={game.slug}
-        className="hero-image"
-        src={game.heroImage}
-        fill
-        priority
-        alt={`${game.title} key art`}
-        sizes="100vw"
-        style={{ objectPosition: game.heroPosition }}
-      />
+      <div className="hero-depth-image" aria-hidden="true">
+        <Image
+          key={game.slug}
+          className="hero-image"
+          src={game.heroImage}
+          fill
+          priority
+          alt=""
+          sizes="100vw"
+          style={{ objectPosition: game.heroPosition }}
+        />
+      </div>
       <div className="hero-wash" />
+      <div className="hero-glow" aria-hidden="true" />
 
-      <div className="hero-content">
+      <div className="hero-content hero-depth-content">
         <span className="hero-index">FEATURED / {String(i + 1).padStart(2, "0")}</span>
         {game.logoImage ? (
           <Image
