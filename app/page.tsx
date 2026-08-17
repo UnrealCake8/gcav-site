@@ -10,6 +10,15 @@ export default function Home() {
 
   return (
     <>
+      <style>{`
+        @media (max-width: 760px) {
+          .desktop-home-experience { display: none !important; }
+        }
+        @media (min-width: 761px) {
+          .desktop-home-experience { display: block; }
+        }
+      `}</style>
+
       <MobileHome />
 
       <div className="desktop-home-experience">
