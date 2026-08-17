@@ -7,7 +7,7 @@ import { site } from "@/content/site";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.siteUrl),
-  title: { default: site.studioName, template: `%s — ${site.studioName}` },
+  title: { default: site.studioName, template: `%s | ${site.studioName}` },
   description: site.description,
   alternates: { canonical: "/" },
   openGraph: { type: "website", title: site.studioName, description: site.description, url: "/" },
