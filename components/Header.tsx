@@ -8,7 +8,6 @@ const nav = [
   ["Home", "/"],
   ["Games", "/games"],
   ["News", "/news"],
-  ["Newswire", "/newswire"],
   ["Developer", "/developer"],
   ["Community", "/community"],
 ];
