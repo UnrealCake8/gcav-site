@@ -15,7 +15,7 @@ export function MobileHome() {
       <header className={styles.topbar}>
         <Link href="/" className={styles.brand} aria-label="Malouk's Games home">
           <span className={styles.brandMark}>M</span>
-          <span>Malouk's</span>
+          <span>Malouk's Games</span>
         </Link>
         <Link href="/news" className={styles.topAction}>NEWS</Link>
       </header>
