@@ -6,6 +6,7 @@ import "./cinematic.css";
 import "./pages.css";
 import "./experiences.css";
 import "./game-experiences.css";
+import "./shock.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { InteractiveFX } from "@/components/InteractiveFX";
