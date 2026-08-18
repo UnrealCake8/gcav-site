@@ -4,6 +4,7 @@ import "./refresh.css";
 import "./interactive.css";
 import "./cinematic.css";
 import "./pages.css";
+import "./experiences.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { InteractiveFX } from "@/components/InteractiveFX";
