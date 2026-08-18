@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { site } from "@/content/site";
 import { games } from "@/content/games";
@@ -10,60 +9,54 @@ export const metadata: Metadata = {
 };
 
 export default function Developer() {
-  const leadGame = games[0];
-
   return (
-    <>
-      <section className="studio-hero">
-        {leadGame && <Image src={leadGame.heroImage} alt="" fill priority sizes="100vw" style={{ objectPosition: leadGame.heroPosition }} />}
-        <div className="studio-hero-shade" />
-        <div className="studio-hero-copy">
-          <p className="eyebrow">THE STUDIO</p>
-          <h1>Small team.<br />Big worlds.</h1>
-          <p>Independent Roblox experiences built around places, movement and the feeling that there is always more to discover.</p>
+    <main className="studio-notebook">
+      <header className="notebook-cover">
+        <div className="notebook-stamp">MALOUK&apos;S GAMES / STUDIO FILE 001</div>
+        <div className="notebook-title-row">
+          <h1>We build places<br />people want to stay in.</h1>
+          <p>Not a giant studio. Not trying to act like one. Just a small team making ambitious Roblox worlds around movement, atmosphere and things that are fun immediately.</p>
         </div>
-      </section>
+        <div className="notebook-rule"><span>EST. IN DEVELOPMENT</span><span>ROBLOX / UAE</span></div>
+      </header>
 
-      <section className="section studio-manifesto" data-reveal>
-        <span>01 / WHY WE BUILD</span>
-        <h2>We want Roblox games to feel like places, not menus.</h2>
-        <div className="studio-manifesto-copy">
-          <p>We build around the things players actually want to do: explore, drive, fly, discover and come back with friends.</p>
-          <p>Each project has its own identity, but the goal stays the same: make something that feels good within seconds of joining and still has reasons to return later.</p>
-        </div>
-      </section>
-
-      <section className="section developer-pillars" data-reveal>
-        <div className="section-head">
-          <div><p className="eyebrow">02 / HOW WE BUILD</p><h2>Our focus.</h2></div>
-        </div>
-        <div className="developer-grid">
-          <article><span>01</span><h3>Worlds with identity</h3><p>Places should feel recognizable, explorable and worth spending time in.</p></article>
-          <article><span>02</span><h3>Movement that feels good</h3><p>Cars, aircraft, bikes and player movement should be enjoyable before anything else.</p></article>
-          <article><span>03</span><h3>Games that keep growing</h3><p>Projects evolve through new areas, vehicles, systems and player feedback.</p></article>
-        </div>
-      </section>
-
-      <section className="section studio-projects" data-reveal>
-        <div className="section-head"><div><p className="eyebrow">03 / CURRENT WORK</p><h2>In development.</h2></div></div>
-        {games.map((game, index) => (
-          <Link className="studio-project" key={game.slug} href={`/games/${game.slug}`}>
-            <span>{String(index + 1).padStart(2, "0")}</span>
-            <strong>{game.title}</strong>
-            <small>{[game.status, game.platform].filter(Boolean).join(" / ")}</small>
-            <b>↗</b>
-          </Link>
-        ))}
-      </section>
-
-      <section className="page-signoff" data-reveal>
+      <section className="notebook-entry">
+        <aside><span>ENTRY 01</span><small>THE IDEA</small></aside>
         <div>
-          <p className="eyebrow">04 / CONTACT</p>
-          <h2>Have something worth talking about?</h2>
-          <p className="finale-copy">For project, community or general enquiries, contact Malouk&apos;s Games directly.</p>
+          <h2>Games should feel like places, not menus.</h2>
+          <p>We care about the first few seconds after you join. Can you move? Can you explore? Is there something interesting in the distance? Does the world make you want to see what&apos;s around the next corner?</p>
+          <p>That is the starting point before progression systems, currencies or anything else gets layered on top.</p>
         </div>
-        <a className="button light-button" href={`mailto:${site.contactEmail}`}>Email the studio</a>
       </section>
-    </>
+
+      <section className="notebook-entry notebook-entry-dark">
+        <aside><span>ENTRY 02</span><small>THE RULES</small></aside>
+        <div className="notebook-principles">
+          <article><b>01</b><strong>Make movement fun first.</strong><p>Driving, flying and simply getting around should feel satisfying before rewards are involved.</p></article>
+          <article><b>02</b><strong>Give every world an identity.</strong><p>A player should be able to recognise the place from a screenshot without needing the logo.</p></article>
+          <article><b>03</b><strong>Leave room to grow.</strong><p>Projects should be able to expand through new locations, vehicles, systems and player ideas.</p></article>
+        </div>
+      </section>
+
+      <section className="notebook-entry">
+        <aside><span>ENTRY 03</span><small>ON THE DESK</small></aside>
+        <div className="notebook-project-board">
+          {games.map((game, index) => (
+            <Link href={`/games/${game.slug}`} className="notebook-project" key={game.slug}>
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              <div><strong>{game.title}</strong><small>{[game.status, game.platform].filter(Boolean).join(" / ")}</small></div>
+              <b>OPEN FILE ↗</b>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section className="notebook-contact">
+        <span>LAST PAGE</span>
+        <h2>Want to talk to the studio?</h2>
+        <p>Project, community or general enquiries can go straight to Malouk&apos;s Games.</p>
+        <a href={`mailto:${site.contactEmail}`}>EMAIL THE STUDIO ↗</a>
+      </section>
+    </main>
   );
 }
