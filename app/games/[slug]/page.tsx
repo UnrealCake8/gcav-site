@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { GameGallery } from "@/components/GameGallery";
 import { games, getGame } from "@/content/games";
 
 export function generateStaticParams() {
@@ -62,7 +63,7 @@ export default async function GamePage({ params }: { params: Promise<{ slug: str
       </section>
 
       {hasDetails && (
-        <section className="section detail-grid">
+        <section className="section detail-grid" data-reveal>
           {game.description && (
             <div>
               <p className="eyebrow">ABOUT</p>
@@ -86,20 +87,15 @@ export default async function GamePage({ params }: { params: Promise<{ slug: str
       )}
 
       {game.screenshots && game.screenshots.length > 0 && (
-        <section className="section media-section">
+        <section className="section media-section" data-reveal>
           <div className="section-head">
             <div>
               <p className="eyebrow">MEDIA</p>
               <h2>From the world</h2>
             </div>
+            <span className="gallery-hint">Click any image to explore</span>
           </div>
-          <div className="media-grid">
-            {game.screenshots.map((shot, index) => (
-              <figure className={index === 0 ? "media-featured" : undefined} key={shot.src}>
-                <Image src={shot.src} alt={shot.alt} width={1600} height={900} sizes="(max-width: 760px) 100vw, 50vw" />
-              </figure>
-            ))}
-          </div>
+          <GameGallery shots={game.screenshots} />
         </section>
       )}
     </>
