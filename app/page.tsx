@@ -3,6 +3,7 @@ import Link from "next/link";
 import { HeroCarousel } from "@/components/HeroCarousel";
 import { GameCard } from "@/components/GameCard";
 import { MobileHome } from "@/components/MobileHome";
+import { WorldSelector } from "@/components/WorldSelector";
 import { featuredGames, games } from "@/content/games";
 import { getSortedNews } from "@/content/news";
 
@@ -78,10 +79,12 @@ export default function Home() {
           )}
         </section>
 
+        <WorldSelector games={games} />
+
         <section className="section games-section cinematic-section" data-reveal>
           <div className="section-head cinematic-head">
             <div>
-              <p className="eyebrow">OUR WORLDS</p>
+              <p className="eyebrow">ALL PROJECTS</p>
               <h2>Games</h2>
             </div>
             <Link className="text-link playful-link" href="/games">View all <span>↗</span></Link>
@@ -91,12 +94,16 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="social-callout" data-reveal>
+        <section className="social-callout studio-finale" data-reveal>
           <div>
             <p className="eyebrow">MALOUK&apos;S GAMES</p>
-            <h2>Follow what we build next.</h2>
+            <h2>See what comes next.</h2>
+            <p className="finale-copy">Follow development, catch new screenshots, and be there when the next world opens.</p>
           </div>
-          <Link className="button light-button" href="/community">Community</Link>
+          <div className="finale-actions">
+            <Link className="button light-button" href="/community">Enter Community</Link>
+            <Link className="finale-news-link" href="/news">Read the Newswire ↗</Link>
+          </div>
         </section>
       </div>
     </>
