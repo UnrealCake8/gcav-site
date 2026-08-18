@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Logo } from "./Logo";
 
@@ -12,9 +13,17 @@ const nav = [
   ["Community", "/community"],
 ];
 
+const mobileIcons: Record<string, string> = {
+  "/": "⌂",
+  "/games": "◇",
+  "/news": "▤",
+  "/developer": "◫",
+  "/community": "◎",
+};
+
 export function Header() {
-  const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const update = () => setScrolled(scrollY > 24);
@@ -23,81 +32,42 @@ export function Header() {
     return () => removeEventListener("scroll", update);
   }, []);
 
-  useEffect(() => {
-    if (!open) return;
-
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
-    };
-
-    addEventListener("keydown", onKeyDown);
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      removeEventListener("keydown", onKeyDown);
-    };
-  }, [open]);
+  const isActive = (href: string) => {
+    if (href === "/") return pathname === "/";
+    return pathname === href || pathname.startsWith(`${href}/`);
+  };
 
   return (
-    <header className={`header ${scrolled || open ? "header-solid" : ""}`}>
-      <div className="nav-wrap">
-        <Link href="/" className="logo-link" onClick={() => setOpen(false)}>
-          <Logo />
-        </Link>
+    <>
+      <header className={`header ${scrolled ? "header-solid" : ""}`}>
+        <div className="nav-wrap">
+          <Link href="/" className="logo-link">
+            <Logo />
+          </Link>
 
-        <nav className="nav desktop-nav" aria-label="Main navigation">
-          {nav.map(([name, href]) => (
-            <Link key={href} href={href}>
-              {name}
-            </Link>
-          ))}
-        </nav>
-
-        <button
-          className={`menu ${open ? "is-open" : ""}`}
-          aria-expanded={open}
-          aria-controls="mobile-menu"
-          aria-label={open ? "Close menu" : "Open menu"}
-          onClick={() => setOpen((value) => !value)}
-        >
-          <span />
-          <span />
-          <span />
-        </button>
-      </div>
-
-      <div
-        className={`mobile-menu-layer ${open ? "open" : ""}`}
-        aria-hidden={!open}
-        onClick={() => setOpen(false)}
-      >
-        <aside
-          id="mobile-menu"
-          className="mobile-menu-panel"
-          aria-label="Mobile navigation"
-          onClick={(event) => event.stopPropagation()}
-        >
-          <div className="mobile-menu-kicker">Explore Malouk's Games</div>
-
-          <nav className="mobile-nav">
-            {nav.map(([name, href], index) => (
-              <Link key={href} href={href} onClick={() => setOpen(false)}>
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                <strong>{name}</strong>
-                <b aria-hidden="true">↗</b>
+          <nav className="nav desktop-nav" aria-label="Main navigation">
+            {nav.map(([name, href]) => (
+              <Link key={href} href={href}>
+                {name}
               </Link>
             ))}
           </nav>
+        </div>
+      </header>
 
-          <div className="mobile-menu-footer">
-            <span>Malouk's Games</span>
-            <span>Built for mobile exploration</span>
-          </div>
-        </aside>
-      </div>
-    </header>
+      <nav className="mobile-tabbar" aria-label="Mobile navigation">
+        {nav.map(([name, href]) => (
+          <Link
+            key={href}
+            href={href}
+            className={isActive(href) ? "is-active" : ""}
+            aria-current={isActive(href) ? "page" : undefined}
+          >
+            <span aria-hidden="true">{mobileIcons[href]}</span>
+            <b>{name}</b>
+          </Link>
+        ))}
+      </nav>
+    </>
   );
 }
