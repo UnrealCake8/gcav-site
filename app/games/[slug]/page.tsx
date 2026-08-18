@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
+import { GameGallery } from "@/components/GameGallery";
 import { games, getGame } from "@/content/games";
 
 export function generateStaticParams() {
@@ -13,11 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: game.title,
     description: game.description || game.tagline,
-    openGraph: {
-      title: game.title,
-      description: game.description || game.tagline,
-      images: [game.heroImage]
-    }
+    openGraph: { title: game.title, description: game.description || game.tagline, images: [game.heroImage] }
   };
 }
 
@@ -25,83 +23,86 @@ export default async function GamePage({ params }: { params: Promise<{ slug: str
   const game = getGame((await params).slug);
   if (!game) notFound();
 
-  const hasDetails = game.description || game.features?.length || game.developmentNote;
+  const isAero = game.slug === "aero-horizon";
 
   return (
-    <>
-      <section className="game-hero">
-        <Image
-          src={game.heroImage}
-          alt={`${game.title} key art`}
-          fill
-          priority
-          sizes="100vw"
-          style={{ objectPosition: game.heroPosition }}
-        />
-        <div className="hero-wash" />
-        <div className="game-hero-content">
-          <p className="eyebrow">{[game.status, game.platform].filter(Boolean).join(" · ")}</p>
+    <main className={`game-experience ${isAero ? "game-experience-aero" : "game-experience-gcav"}`}>
+      <section className="game-experience-hero">
+        <Image src={game.heroImage} alt={`${game.title} key art`} fill priority sizes="100vw" style={{ objectPosition: game.heroPosition }} />
+        <div className="game-experience-shade" />
+        <Link href="/games" className="game-experience-back">← ALL GAMES</Link>
+        <div className="game-experience-copy">
+          <div className="game-experience-meta">{[game.status, game.platform].filter(Boolean).join(" / ")}</div>
           {game.logoImage ? (
-            <Image
-              className="game-page-logo"
-              src={game.logoImage}
-              alt={`${game.title} logo`}
-              width={760}
-              height={380}
-              sizes="(max-width: 760px) 82vw, 580px"
-            />
-          ) : (
-            <h1>{game.title}</h1>
-          )}
+            <Image className="game-experience-logo" src={game.logoImage} alt={`${game.title} logo`} width={760} height={380} />
+          ) : <h1>{game.title}</h1>}
           <p>{game.tagline}</p>
-          <div className="actions">
-            {game.robloxUrl && <a className="button primary" href={game.robloxUrl}>Play on Roblox</a>}
-            {game.discordUrl && <a className="button secondary" href={game.discordUrl}>Follow Development</a>}
+          <div className="game-experience-actions">
+            {game.robloxUrl && <a href={game.robloxUrl}>PLAY NOW ↗</a>}
+            {game.discordUrl && <a href={game.discordUrl}>FOLLOW DEVELOPMENT ↗</a>}
           </div>
         </div>
       </section>
 
-      {hasDetails && (
-        <section className="section detail-grid">
-          {game.description && (
+      {isAero ? (
+        <>
+          <section className="aero-flight-panel">
+            <div className="aero-flight-code">AH / 27</div>
             <div>
-              <p className="eyebrow">ABOUT</p>
-              <h2>{game.title}</h2>
+              <span>FLIGHT BRIEFING</span>
+              <h2>Built for the long way around.</h2>
               <p>{game.description}</p>
             </div>
-          )}
-          {game.features && game.features.length > 0 && (
-            <div>
-              <p className="eyebrow">FEATURES</p>
-              <ul>{game.features.map((feature) => <li key={feature}>{feature}</li>)}</ul>
+            <div className="aero-flight-stats">
+              <span><b>01</b> AVIATION FOCUS</span>
+              <span><b>02</b> COMMERCIAL AIRCRAFT</span>
+              <span><b>03</b> SCENIC FLIGHT</span>
             </div>
-          )}
-          {game.developmentNote && (
-            <div>
-              <p className="eyebrow">DEVELOPMENT</p>
-              <p>{game.developmentNote}</p>
-            </div>
-          )}
-        </section>
-      )}
+          </section>
 
-      {game.screenshots && game.screenshots.length > 0 && (
-        <section className="section media-section">
-          <div className="section-head">
-            <div>
-              <p className="eyebrow">MEDIA</p>
-              <h2>From the world</h2>
+          {game.screenshots?.length ? (
+            <section className="aero-gallery-wrap">
+              <div className="aero-gallery-head"><span>WINDOW VIEW</span><strong>From the flight deck.</strong></div>
+              <GameGallery shots={game.screenshots} />
+            </section>
+          ) : null}
+
+          <section className="aero-development-note">
+            <span>STATUS / IN DEVELOPMENT</span>
+            <p>{game.developmentNote}</p>
+          </section>
+        </>
+      ) : (
+        <>
+          <section className="gcav-city-strip">
+            <span>DUBAI / UAE</span><span>OPEN WORLD</span><span>VEHICLES</span><span>EXPLORATION</span>
+          </section>
+
+          <section className="gcav-dossier">
+            <aside><span>CASE FILE</span><b>GCAV-05</b></aside>
+            <div className="gcav-dossier-main">
+              <span>ABOUT THE WORLD</span>
+              <h2>Dubai, rebuilt for Roblox.</h2>
+              <p>{game.description}</p>
             </div>
-          </div>
-          <div className="media-grid">
-            {game.screenshots.map((shot, index) => (
-              <figure className={index === 0 ? "media-featured" : undefined} key={shot.src}>
-                <Image src={shot.src} alt={shot.alt} width={1600} height={900} sizes="(max-width: 760px) 100vw, 50vw" />
-              </figure>
-            ))}
-          </div>
-        </section>
+            <div className="gcav-feature-list">
+              {game.features?.map((feature, index) => <div key={feature}><b>{String(index + 1).padStart(2, "0")}</b><span>{feature}</span></div>)}
+            </div>
+          </section>
+
+          {game.screenshots?.length ? (
+            <section className="gcav-gallery-wrap">
+              <div className="gcav-gallery-head"><span>STREET ARCHIVE</span><strong>Scenes from the city.</strong></div>
+              <GameGallery shots={game.screenshots} />
+            </section>
+          ) : null}
+
+          <section className="gcav-development-note">
+            <span>DEVELOPMENT FILE</span>
+            <p>{game.developmentNote}</p>
+          </section>
+        </>
       )}
-    </>
+    </main>
   );
 }
