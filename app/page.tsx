@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { HeroCarousel } from "@/components/HeroCarousel";
 import { GameCard } from "@/components/GameCard";
@@ -6,7 +7,9 @@ import { featuredGames, games } from "@/content/games";
 import { getSortedNews } from "@/content/news";
 
 export default function Home() {
-  const latestNews = getSortedNews().slice(0, 3);
+  const latestNews = getSortedNews().slice(0, 4);
+  const featuredStory = latestNews[0];
+  const secondaryStories = latestNews.slice(1);
 
   return (
     <>
@@ -24,10 +27,61 @@ export default function Home() {
       <div className="desktop-home-experience">
         <HeroCarousel items={featuredGames} />
 
+        <section className="section news-preview cinematic-news home-news-editorial" data-reveal>
+          <div className="section-head">
+            <div>
+              <p className="eyebrow">NEWSWIRE</p>
+              <h2>Latest</h2>
+            </div>
+            <Link className="text-link playful-link" href="/news">View all news <span>↗</span></Link>
+          </div>
+
+          {!featuredStory ? (
+            <Link className="news-placeholder mission-card" href="/news">
+              <span className="eyebrow">LOCKED FOR NOW</span>
+              <strong>Development updates will appear here.</strong>
+              <span className="news-arrow">↗</span>
+            </Link>
+          ) : (
+            <div className="editorial-news-grid">
+              <Link className="featured-news-story" href={`/news/${featuredStory.slug}`}>
+                {featuredStory.heroImage && (
+                  <div className="featured-news-media">
+                    <Image
+                      src={featuredStory.heroImage}
+                      alt={featuredStory.heroAlt || featuredStory.title}
+                      fill
+                      sizes="(max-width: 1100px) 100vw, 66vw"
+                    />
+                  </div>
+                )}
+                <div className="featured-news-copy">
+                  <span className="home-news-meta">{featuredStory.category} · {featuredStory.date}</span>
+                  <strong>{featuredStory.title}</strong>
+                  <p>{featuredStory.excerpt}</p>
+                  <span className="news-read-more">Read story ↗</span>
+                </div>
+              </Link>
+
+              {secondaryStories.length > 0 && (
+                <div className="home-news-list compact-news-list">
+                  {secondaryStories.map((post) => (
+                    <Link className="home-news-link" href={`/news/${post.slug}`} key={post.slug}>
+                      <span className="home-news-meta">{post.category} · {post.date}</span>
+                      <strong>{post.title}</strong>
+                      <span>↗</span>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+        </section>
+
         <section className="section games-section cinematic-section" data-reveal>
           <div className="section-head cinematic-head">
             <div>
-              <p className="eyebrow">SELECT YOUR WORLD</p>
+              <p className="eyebrow">OUR WORLDS</p>
               <h2>Games</h2>
             </div>
             <Link className="text-link playful-link" href="/games">View all <span>↗</span></Link>
@@ -37,40 +91,12 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="section news-preview cinematic-news" data-reveal>
-          <div className="section-head">
-            <div>
-              <p className="eyebrow">MISSION FEED</p>
-              <h2>Latest</h2>
-            </div>
-            <Link className="text-link playful-link" href="/news">View news <span>↗</span></Link>
-          </div>
-
-          {latestNews.length === 0 ? (
-            <Link className="news-placeholder mission-card" href="/news">
-              <span className="eyebrow">LOCKED FOR NOW</span>
-              <strong>Development updates will appear here.</strong>
-              <span className="news-arrow">↗</span>
-            </Link>
-          ) : (
-            <div className="home-news-list">
-              {latestNews.map((post) => (
-                <Link className="home-news-link" href={`/news/${post.slug}`} key={post.slug}>
-                  <span className="home-news-meta">{post.category} · {post.date}</span>
-                  <strong>{post.title}</strong>
-                  <span>↗</span>
-                </Link>
-              ))}
-            </div>
-          )}
-        </section>
-
         <section className="social-callout" data-reveal>
           <div>
-            <p className="eyebrow">JOIN THE LOBBY</p>
-            <h2>Follow the studio.</h2>
+            <p className="eyebrow">MALOUK&apos;S GAMES</p>
+            <h2>Follow what we build next.</h2>
           </div>
-          <Link className="button light-button pulse-button" href="/community">Community</Link>
+          <Link className="button light-button" href="/community">Community</Link>
         </section>
       </div>
     </>
