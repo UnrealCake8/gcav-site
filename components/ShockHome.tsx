@@ -112,7 +112,7 @@ export function ShockHome({ games, news }: { games: Game[]; news: NewsPost[] }) 
 
       <section className="shock-manifesto">
         <span className="shock-manifesto-code">MALOUK&apos;S GAMES / INDEPENDENT / ROBLOX</span>
-        <h2>We don&apos;t want to build another simulator.</h2>
+        <h2>We don&apos;t want to build sloppy games..</h2>
         <p>We want worlds with value, gameplay that feels good, and places players remember after they leave.</p>
         <div className="shock-manifesto-links">
           <Link href="/developer">MEET THE STUDIO ↗</Link>
