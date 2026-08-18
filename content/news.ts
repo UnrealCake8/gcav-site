@@ -31,7 +31,7 @@ export const news: NewsPost[] = [
     author: "WebDev1",
     category: "Development Update",
     excerpt: "In this article, we tell you all about updates related to our games!",
-    heroImage: "https://gcav-site.vercel.app/games/grand-chamak-auto-v/COVER.webp",
+    heroImage: "https://malouksgames.com/games/grand-chamak-auto-v/COVER.webp",
     heroAlt: "Grand Chamak Auto's logo, one of the games being developed here at Malouk's Games!",
     featured: true,
     body: [
@@ -49,7 +49,7 @@ export const news: NewsPost[] = [
       },
       {
         type: "image",
-        src: "https://gcav-site.vercel.app/games/grand-chamak-auto-v/AERO_HORIZON_2.webp",
+        src: "https://malouksgames.com/games/grand-chamak-auto-v/AERO_HORIZON_2.webp",
         alt: "AHFS27",
         caption: "A preview of our Flight Simulator, Aero Horizon Flight Simulator 2027, aka AHFS27 for short!",
       },
