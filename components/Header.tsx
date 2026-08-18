@@ -47,26 +47,27 @@ export function Header() {
 
           <nav className="nav desktop-nav" aria-label="Main navigation">
             {nav.map(([name, href]) => (
-              <Link key={href} href={href}>
-                {name}
-              </Link>
+              <Link key={href} href={href}>{name}</Link>
             ))}
           </nav>
         </div>
       </header>
 
       <nav className="mobile-tabbar" aria-label="Mobile navigation">
-        {nav.map(([name, href]) => (
-          <Link
-            key={href}
-            href={href}
-            className={isActive(href) ? "is-active" : ""}
-            aria-current={isActive(href) ? "page" : undefined}
-          >
-            <span aria-hidden="true">{mobileIcons[href]}</span>
-            <b>{name}</b>
-          </Link>
-        ))}
+        {nav.map(([name, href]) => {
+          const active = isActive(href);
+          return (
+            <Link
+              key={href}
+              href={href}
+              className={active ? "is-active" : ""}
+              aria-current={active ? "page" : undefined}
+            >
+              <span aria-hidden="true">{mobileIcons[href]}</span>
+              <b>{name}</b>
+            </Link>
+          );
+        })}
       </nav>
     </>
   );
