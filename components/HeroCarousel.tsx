@@ -2,15 +2,24 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Game } from "@/content/games";
+
+const AUTOPLAY_MS = 9000;
 
 export function HeroCarousel({ items }: { items: Game[] }) {
   const [i, setI] = useState(0);
+  const [paused, setPaused] = useState(false);
   const start = useRef(0);
   const heroRef = useRef<HTMLElement>(null);
   const game = items[i];
   const move = (direction: number) => setI((current) => (current + direction + items.length) % items.length);
+
+  useEffect(() => {
+    if (items.length < 2 || paused || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const timer = window.setInterval(() => move(1), AUTOPLAY_MS);
+    return () => window.clearInterval(timer);
+  }, [items.length, paused]);
 
   const setDepth = (x: number, y: number) => {
     const el = heroRef.current;
@@ -39,7 +48,13 @@ export function HeroCarousel({ items }: { items: Game[] }) {
       onPointerMove={(event) => {
         if (event.pointerType === "mouse") setDepth(event.clientX, event.clientY);
       }}
-      onPointerLeave={resetDepth}
+      onPointerEnter={() => setPaused(true)}
+      onPointerLeave={() => {
+        resetDepth();
+        setPaused(false);
+      }}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
       onKeyDown={(event) => {
         if (event.key === "ArrowLeft") move(-1);
         if (event.key === "ArrowRight") move(1);
@@ -83,7 +98,7 @@ export function HeroCarousel({ items }: { items: Game[] }) {
         {game.description && <p className="lede">{game.description}</p>}
         <div className="actions">
           <Link className="button primary" href={`/games/${game.slug}`}>
-            Explore Game
+            Learn More
           </Link>
           {game.robloxUrl && (
             <a className="button secondary" href={game.robloxUrl}>
@@ -94,8 +109,13 @@ export function HeroCarousel({ items }: { items: Game[] }) {
       </div>
 
       {items.length > 1 && (
-        <div className="carousel-controls">
+        <div className="carousel-controls" aria-label="Featured game controls">
           <button onClick={() => move(-1)} aria-label="Previous featured game">←</button>
+          <div className="hero-progress" aria-hidden="true">
+            {items.map((item, index) => (
+              <span key={item.slug} className={index === i ? "active" : ""} />
+            ))}
+          </div>
           <button onClick={() => move(1)} aria-label="Next featured game">→</button>
         </div>
       )}
