@@ -12,14 +12,6 @@ export function MobileHome() {
 
   return (
     <div className={styles.mobileExperience}>
-      <header className={styles.topbar}>
-        <Link href="/" className={styles.brand} aria-label="Malouk's Games home">
-          <span className={styles.brandMark}>M</span>
-          <span>Malouk's Games</span>
-        </Link>
-        <Link href="/news" className={styles.topAction}>NEWS</Link>
-      </header>
-
       <section className={styles.hero}>
         <Image
           src={featured.heroImage}
@@ -32,7 +24,10 @@ export function MobileHome() {
         />
         <div className={styles.heroShade} />
         <div className={styles.heroContent}>
-          <span className={styles.status}>{featured.status ?? "Featured"}</span>
+          <div className={styles.heroMeta}>
+            <span>{featured.status ?? "Featured"}</span>
+            <span>{featured.platform ?? "Game"}</span>
+          </div>
           {featured.logoImage ? (
             <Image
               src={featured.logoImage}
@@ -46,33 +41,30 @@ export function MobileHome() {
           )}
           <p>{featured.tagline}</p>
           <div className={styles.heroActions}>
-            <Link href={`/games/${featured.slug}`} className={styles.primaryButton}>EXPLORE</Link>
-            {featured.robloxUrl ? (
-              <a href={featured.robloxUrl} className={styles.iconButton} aria-label="Play on Roblox">↗</a>
-            ) : (
-              <Link href="/games" className={styles.iconButton} aria-label="View all games">→</Link>
-            )}
+            <Link href={`/games/${featured.slug}`} className={styles.primaryButton}>EXPLORE WORLD</Link>
+            <Link href="/games" className={styles.secondaryButton}>ALL GAMES</Link>
           </div>
         </div>
-        <div className={styles.swipeHint}>SCROLL TO EXPLORE <span>↓</span></div>
+        <div className={styles.swipeHint}>SWIPE UP TO EXPLORE <span>↓</span></div>
       </section>
 
       <main className={styles.feed}>
         <section className={styles.section}>
           <div className={styles.sectionTitle}>
             <div>
-              <span>01 / GAMES</span>
-              <h2>Pick a world.</h2>
+              <span>01 / WORLDS</span>
+              <h2>Choose where to go next.</h2>
             </div>
-            <Link href="/games">ALL ↗</Link>
+            <Link href="/games">VIEW ALL ↗</Link>
           </div>
 
           <div className={styles.gameRail}>
-            {games.map((game) => (
+            {games.map((game, index) => (
               <Link href={`/games/${game.slug}`} className={styles.gameTile} key={game.slug}>
                 <div className={styles.gameArt}>
-                  <Image src={game.heroImage} alt="" fill sizes="82vw" style={{ objectPosition: game.heroPosition }} />
+                  <Image src={game.heroImage} alt="" fill sizes="88vw" style={{ objectPosition: game.heroPosition }} />
                   <div className={styles.gameArtShade} />
+                  <span className={styles.gameIndex}>{String(index + 1).padStart(2, "0")}</span>
                   <span className={styles.gamePlatform}>{game.platform ?? "Game"}</span>
                 </div>
                 <div className={styles.gameInfo}>
@@ -87,21 +79,19 @@ export function MobileHome() {
           </div>
         </section>
 
-        <section className={styles.section}>
-          <div className={styles.sectionTitle}>
-            <div>
-              <span>02 / NEWS</span>
-              <h2>What&apos;s happening.</h2>
-            </div>
-            <Link href="/news">ALL ↗</Link>
+        <section className={styles.newsSection}>
+          <div className={styles.newsIntro}>
+            <span>02 / NEWSWIRE</span>
+            <h2>Latest from the studio.</h2>
+            <Link href="/news">OPEN NEWSWIRE ↗</Link>
           </div>
 
           <div className={styles.newsStack}>
             {latestNews.length ? latestNews.map((post, index) => (
               <Link href={`/news/${post.slug}`} className={styles.newsCard} key={post.slug}>
-                <span className={styles.newsNumber}>0{index + 1}</span>
+                <span className={styles.newsNumber}>{String(index + 1).padStart(2, "0")}</span>
                 <div>
-                  <span className={styles.newsMeta}>{post.category} · {post.date}</span>
+                  <span className={styles.newsMeta}>{post.category} | {post.date}</span>
                   <strong>{post.title}</strong>
                   <p>{post.excerpt}</p>
                 </div>
@@ -119,23 +109,19 @@ export function MobileHome() {
 
         <section className={styles.communityCard}>
           <span>03 / COMMUNITY</span>
-          <h2>Don&apos;t just watch.</h2>
-          <p>Follow development, see what we&apos;re building and jump into the community.</p>
-          <Link href="/community">ENTER COMMUNITY <b>↗</b></Link>
+          <h2>Come along for the build.</h2>
+          <p>Follow development, catch screenshots first and stay close to what Malouk&apos;s Games is making.</p>
+          <div className={styles.communityActions}>
+            <Link href="/community">COMMUNITY <b>↗</b></Link>
+            <Link href="/developer">THE STUDIO <b>↗</b></Link>
+          </div>
         </section>
 
         <div className={styles.mobileFooter}>
-          <strong>Malouk's GAMES</strong>
-          <span>Independent games. Built differently.</span>
+          <strong>MALOUK&apos;S GAMES</strong>
+          <span>Independent worlds, built differently.</span>
         </div>
       </main>
-
-      <nav className={styles.bottomNav} aria-label="Mobile navigation">
-        <Link href="/"><span>⌂</span><b>HOME</b></Link>
-        <Link href="/games"><span>◇</span><b>GAMES</b></Link>
-        <Link href="/news"><span>▤</span><b>NEWS</b></Link>
-        <Link href="/community"><span>◎</span><b>COMMUNITY</b></Link>
-      </nav>
     </div>
   );
 }
