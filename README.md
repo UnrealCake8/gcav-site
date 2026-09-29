@@ -1,33 +1,4 @@
-# Independent game studio website
-
-A standalone, static-first studio site built with Next.js and TypeScript. It has no Wix code, database, accounts, analytics, or CMS. All content lives in small files inside `content/`.
-
-## Start locally
-
-Install [Node.js 20 or newer](https://nodejs.org), then run:
-
-```bash
-npm install
-npm run dev
-```
-
-Open `http://localhost:3000`. Create a production build with `npm run build`; the static site is written to `out/`.
-
-## Edit the studio
-
-### Name, description, domain, and color
-
-Open `content/site.ts`:
-
-* Replace `STUDIO_NAME` and `STUDIO_DESCRIPTION` with approved copy.
-* Change `siteUrl` to the final `https://...` domain. This powers canonical links, the sitemap, and social metadata.
-* Change `accentColor` to any CSS hex color.
-
-### Logo
-
-Put the official asset in `public/logo.svg`, then set `logo: "/logo.svg"` in `content/site.ts`. Until then, the header deliberately displays a simple replaceable placeholder—not an invented studio identity.
-
-### Discord, Roblox, and social links
+# Malouk's game Website
 
 Paste only official URLs into `content/social.ts`. Leave unknown URLs blank; blank destinations are automatically hidden. A game-specific Roblox or Discord URL belongs on that game in `content/games.ts`.
 
