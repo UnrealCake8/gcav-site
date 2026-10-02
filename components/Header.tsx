@@ -11,6 +11,7 @@ const nav = [
   ["News", "/news"],
   ["Developer", "/developer"],
   ["Community", "/community"],
+  ["Insider", "/insider"],
 ];
 
 const mobileIcons: Record<string, string> = {
@@ -19,6 +20,7 @@ const mobileIcons: Record<string, string> = {
   "/news": "▤",
   "/developer": "◫",
   "/community": "◎",
+  "/insider": "★",
 };
 
 export function Header() {
@@ -47,7 +49,9 @@ export function Header() {
 
           <nav className="nav desktop-nav" aria-label="Main navigation">
             {nav.map(([name, href]) => (
-              <Link key={href} href={href}>{name}</Link>
+              <Link key={href} href={href} className={isActive(href) ? "is-active" : ""}>
+                {name}
+              </Link>
             ))}
           </nav>
         </div>
