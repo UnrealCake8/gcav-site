@@ -8,6 +8,7 @@ import "./experiences.css";
 import "./game-experiences.css";
 import "./shock.css";
 import "./mobile.css";
+import "./insider.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { InteractiveFX } from "@/components/InteractiveFX";
@@ -18,6 +19,7 @@ export const metadata: Metadata = {
   title: { default: site.studioName, template: `%s | ${site.studioName}` },
   description: site.description,
   alternates: { canonical: "/" },
+  icons: { icon: "/icon.svg" },
   openGraph: { type: "website", title: site.studioName, description: site.description, url: "/" },
   twitter: { card: "summary_large_image", title: site.studioName, description: site.description },
 };
